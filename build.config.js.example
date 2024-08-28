@@ -23,6 +23,7 @@ const options = () => {
     server: {
         qrCode: true,
         port: 3030,
+        openBrowser: false,
         middleware: []
     },
     dir: {

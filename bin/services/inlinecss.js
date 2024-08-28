@@ -12,6 +12,8 @@ class CssInline {
         this.buildDir = context.dir.dest;
         this.sourceDir = context.dir.src;
 
+        this.srcGlob = this.buildDir + '/*.html';
+
         this.port = services.express.port ?? 3030;
 
         this.inlineOpts =  {
@@ -29,12 +31,12 @@ class CssInline {
         return { render: this.render }
     }
     async render() {
-        await task('cssInline', async (utils) => {
+        await task('Inline CSS', async (utils) => {
             let { getFiles, readFromFile, writeFile } = utils;
 
-            let files = await getFiles(this.buildDir + '/*.html');
+            let files = await getFiles(this.srcGlob);
 
-            for (const file of files) {
+            for await (const file of files) {
                 let fileString = await readFromFile(file);
                 let fileName = basename(file);
                 let string = '';

@@ -1,4 +1,7 @@
 import path from "path";
+import { log } from "./logger.js";
+
+const debug = process.argv.includes('--debug') || false;
 
 const setOpts = async () => {
   let options;
@@ -7,6 +10,7 @@ const setOpts = async () => {
       dest: "./build",
       src: "./src",
     },
+    debug: debug,
   };
 
   try {
@@ -22,20 +26,14 @@ const setOpts = async () => {
 
   for (const [key, value] of Object.entries(defaultOptions)) {
     if (!options.hasOwnProperty(key)) {
-      log(
-        `No ${key} option found in build.config.js. Using default value: ${JSON.stringify(
-          value
-        )}`,
-        "warn"
-      );
+      if (key !== "debug") {
+        log(`No ${key} option found in build.config.js. Using default value: ${JSON.stringify(value)}`, "warn");
+      }
       options[key] = value;
     } else if (typeof value === "object") {
       for (const [subkey, subvalue] of Object.entries(value)) {
         if (!options[key].hasOwnProperty(subkey)) {
-          log(
-            `No ${subkey} option found in build.config.js. Using default value: ${subvalue}`,
-            "warn"
-          );
+          log(`No ${subkey} option found in build.config.js. Using default value: ${subvalue}`, "warn");
           options[key][subkey] = subvalue;
         }
       }

@@ -1,20 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
 
-{# Extend template and populate content block #}
-{% extends "templates/template.njk" %}
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Document</title>
 
-{% block content %}
+    {% for key, value in css %}
+    {% if key !== 'inline' %}
 
-{% include "templates/components/01_header.html" %}
+    <!-- {{key}} -->
+     
+    <style type="text/css">
+      {% include "../../build/" + value %}
+    </style>
+    {% endif %}
+    {% endfor %}
 
-{% include "templates/components/02_hero.html" %}
+    <link rel="stylesheet" href="css/inline.css">
 
-{% include "templates/components/03_intro.html" %}
+  </head>
 
-{% include "templates/components/04_case-study.html" %}
+  <body>
+    {% include "templates/module.njk" %}
 
-{% include "templates/components/05_reading-room.html" %}
+    <img src="images/image1.jpg" alt="" width="200">
 
-{% include "templates/components/06_quote.html" %}
+  </body>
 
-
-{% endblock %}
+</html>

@@ -22,13 +22,13 @@ class Sass {
         return { render: this.render }
     }
     async render() {
-        await task('sass', async (utils) => {
+        await task('Sass Render', async (utils) => {
             let { getFiles, writeFile } = utils;
-        
+            
             let files = await getFiles(this.sourceDir + '/sass/!(_*).scss');
             
             for (const file of files) {
-                let outputStyle = 'expanded';
+                let outputStyle = 'compressed';
                 let fileName = basename(file, '.scss') + '.css';
                 const opts = this.sassOpts ?? { style: outputStyle, importers: [ new getSassData({ dataDir: this.dataDir }) ] };
         

@@ -9,16 +9,17 @@ const options = () => {
             src: './test/src/sass/passthrough/*',
             dest: './test/build/css'
         },
-        // {
-        //   src: './test/src/assets/images/**/*',
-        //   dest: './test/build/images'
-        // }
+        {
+          src: './test/src/assets/images-assets/*',
+          dest: './test/build/images'
+        }
     ],
     server: {
-        qrCode: true,
-        port: 3030
+        qrCode: false,
+        port: 3030,
+        openBrowser: false,
     }
   };
 };
 
-module.exports = options;
+export default options;

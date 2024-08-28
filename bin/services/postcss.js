@@ -8,8 +8,7 @@ import emailDarkmode from '../plugins/postcss/postcss-email-darkmode.js';
 import { task } from '../functions/task.js';
 import { log } from '../functions/logger.js';
 
-// const defaultPlugins = [ autoprefixer, sortMediaQueries({ sort: 'desktop-first' }), emailDarkmode ];
-const defaultPlugins = [ autoprefixer, sortMediaQueries({ sort: 'desktop-first' }), emailDarkmode ];
+const defaultPlugins = [ autoprefixer, sortMediaQueries({ sort: 'desktop-first', onlyTopLevel: true }), emailDarkmode ];
 
 class PostCss {
     constructor(context) {
@@ -26,8 +25,7 @@ class PostCss {
         return { render: this.render }
     }
     async render() {
-        await task('postCss', async (utils) => {
-            
+        await task('PostCSS', async (utils) => {
             
             let { getFiles, readFromFile, writeFile } = utils;
         
@@ -39,10 +37,6 @@ class PostCss {
                 
                 const result = await this.postcss(this.postcssPlugins)
                     .process(fileString, { from: file, to: file });
-        
-                result.warnings().forEach((warn) => {
-                    log(warn.toString(), 'warn');
-                });
         
                 
                 await writeFile(this.buildDir + '/css/', fileName, result.css);

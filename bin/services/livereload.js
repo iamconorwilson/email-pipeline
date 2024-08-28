@@ -1,7 +1,7 @@
 import livereload from 'livereload';
 
 class LiveReload {
-    constructor(context) {
+    constructor() {
         this.livereload = livereload;
 
         this.init = this.init.bind(this);

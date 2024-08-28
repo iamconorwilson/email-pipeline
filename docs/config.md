@@ -281,6 +281,27 @@ Show a QR code in the terminal for the external IP. This makes it easier to conn
 |  |  |
 | --- | --- |
 | _Object Key_ | `server.qrCode` |
+| _Default Value_ | `true` |
+| _Valid Options_ | Boolean |
+
+#### Example
+
+```js
+const options = () => {
+  return {
+    server: {
+	  qrCode: true
+	}
+  }
+};
+```
+### Server - Open in Browser (optional)
+
+Open the browser automatically when the server starts.
+
+|  |  |
+| --- | --- |
+| _Object Key_ | `server.openBrowser` |
 | _Default Value_ | `false` |
 | _Valid Options_ | Boolean |
 
@@ -290,7 +311,7 @@ Show a QR code in the terminal for the external IP. This makes it easier to conn
 const options = () => {
   return {
     server: {
-	  qrCode: false
+	  openBrowser: false
 	}
   }
 };

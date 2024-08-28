@@ -1,11 +1,11 @@
 import { statSync, unlink, rmdirSync } from "fs";
 import { join } from "path";
-import glob from "glob";
+import { glob } from "glob";
 
 
-const removeFiles = (dir) => {
+const removeFiles = async (dir) => {
 
-    glob(dir, async (err, files) => {
+    await glob(dir, async (err, files) => {
         if (err) throw err;
 
         await files.forEach((file) => {

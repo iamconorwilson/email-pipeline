@@ -13,6 +13,8 @@ class Nunjucks {
         this.sourceDir = context.dir.src;
         this.dataDir = context.dir.data || join(this.sourceDir, 'data');
 
+        this.srcGlob = this.sourceDir + '/*.njk';
+
         //environment
         this.customExt = context.nunjucks?.customExt ?? [];
         this.customFilters = context.nunjucks?.customFilters ?? [];
@@ -50,15 +52,15 @@ class Nunjucks {
 
     async render() {
         
-            await task('nunjucksRender', async (utils) => {
+            await task('Nunjucks Render', async (utils) => {
                 
                 let { getFiles, readFromFile, writeFile } = utils;
 
-                let files = await getFiles(this.sourceDir + '/*.njk');
+                let files = await getFiles(this.srcGlob);
+
+                let data = {css: getFilepaths(this.buildDir, 'css'), ...getData(this.dataDir)};
                 
-                for (const file of files) {
-                    
-                    let data = {css: getFilepaths(this.buildDir, 'css'), ...getData(this.dataDir)};
+                for await (const file of files) {
                     
                     let fileName = basename(file, '.njk') + '.html';
                     

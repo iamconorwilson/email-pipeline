@@ -1,10 +1,10 @@
 {
   "name": "email-pipeline",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "",
   "main": "bin/index.js",
   "scripts": {
-    "dev": "nodemon . --ignore test/",
+    "dev": "nodemon ./bin/index.js --debug --ignore test/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
@@ -15,29 +15,32 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "autoprefixer": "^10.4.13",
-    "chalk": "^5.2.0",
-    "chokidar": "^3.5.3",
+    "autoprefixer": "^10.4.20",
+    "chalk": "^5.3.0",
+    "chokidar": "^3.6.0",
     "connect-livereload": "^0.6.1",
-    "email-comb": "^7.0.6",
-    "express": "^4.18.2",
+    "debounce": "^2.1.0",
+    "email-comb": "^7.0.21",
+    "express": "^4.19.2",
     "fs": "^0.0.1-security",
-    "glob": "^8.1.0",
-    "html-crush": "^6.0.6",
+    "glob": "^11.0.0",
+    "html-crush": "^6.0.19",
     "inline-css": "^4.0.2",
-    "ip": "^1.1.8",
+    "ip": "^2.0.1",
     "livereload": "^0.9.3",
-    "nunjucks": "^3.2.3",
+    "nunjucks": "^3.2.4",
+    "open": "^10.1.0",
+    "ora": "^8.0.1",
     "path": "^0.12.7",
-    "postcss": "^8.4.21",
-    "postcss-sort-media-queries": "^4.3.0",
-    "prettier": "^3.0.3",
+    "postcss": "^8.4.41",
+    "postcss-sort-media-queries": "^5.2.0",
+    "prettier": "^3.3.3",
     "qrcode-terminal": "^0.12.0",
-    "sass": "^1.57.1",
+    "sass": "^1.77.8",
     "serve-index": "^1.9.1",
-    "serve-index-custom-directory": "^1.0.1"
+    "serve-index-custom-directory": "^1.0.2"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.1.4"
   }
 }

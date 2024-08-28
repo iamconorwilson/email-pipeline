@@ -26,8 +26,8 @@ class CleanHtml {
     }
 
     async render() {
-        await task('cleanHtml', async (utils) => {
-            let { getFiles, readFromFile, writeFile, log } = utils;
+        await task('Clean HTML', async (utils) => {
+            let { getFiles, readFromFile, writeFile } = utils;
         
             let files = await getFiles(this.buildDir + '/*.html');
         
@@ -37,16 +37,12 @@ class CleanHtml {
                 let fileName = basename(file);
 
                 //remove <tbody> tags
-                fileString = await fileString.replace(/<tbody>/g, '');
-                fileString = await fileString.replace(/<\/tbody>/g, '');
+                fileString = await fileString.replace(/<\/?tbody>/g, '');
         
                 // Apply comb
                 let combResult = comb(fileString, this.combOpts);
 
-                log(`Cleaned ${fileName} removing ${combResult.deletedFromHead.length} from head and ${combResult.deletedFromBody.length} from body.`)
-
                 let combString = combResult.result;
-
 
                 // Then apply prettify
                 let formattedString = await prettier.format(combString, { parser: 'html', printWidth: 900, htmlWhitespaceSensitivity: 'ignore', singleQuote: true });

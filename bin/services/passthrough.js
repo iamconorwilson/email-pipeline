@@ -1,6 +1,5 @@
-import { basename } from 'path';
-import { copyFileSync, statSync, existsSync, mkdirSync } from 'fs';
-
+import { basename, dirname } from 'path';
+import { copyFile, mkdir } from 'fs';
 import { task } from '../functions/task.js';
 
 class Passthrough {
@@ -18,38 +17,37 @@ class Passthrough {
     }
 
     async render() {
-            if (this.passthrough.length === 0) {
-                return
-            }
 
 
-            for (const passthrough of this.passthrough) {
-                    const { src, dest } = passthrough;
-                    await task('passthrough', async (utils) => {
-                        let { getFiles, findCommonRoot } = utils;
+        if (this.passthrough.length === 0) {
+            resolve();
+            return;
+        }
 
-                        let files = await getFiles(src);
+        for await (const passthrough of this.passthrough) {
 
-                        let common = findCommonRoot(files);
-                        
-                        for (const file of files) {
-                            if (statSync(file).isDirectory()) {
-                                return;
-                            }
+            const { src, dest } = passthrough;
 
-                            let destFile = file.replace(common, dest);
-                            let destDir = destFile.replace(basename(destFile), '');
+            await task(`Passthrough [${src}]`, async (utils) => {
 
-                            if (!existsSync(destDir)) {
-                                mkdirSync(destDir, { recursive: true });
-                            }
+                let files = await utils.getFiles(src);
 
-                            copyFileSync(file, destFile);
+                for await (const file of files) {
 
-                        };
+                    //create the destination directory if it doesn't exist
+                    mkdir(dest, { recursive: true }, (err) => {
+                        if (err) throw err;
                     });
-            };
-        };
+
+                    copyFile(file, dest + "/" + basename(file), (err) => {
+                        if (err) throw err;
+                    });
+
+                }
+            });
+        }
+
+    }
 }
 
 export default Passthrough;
