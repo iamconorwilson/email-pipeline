@@ -18,7 +18,6 @@ const task = async (name, func) => {
       log(`Finished ${name} in ${time}ms`, 'info');
     }
   } catch (e) {
-    log(`${name}: ${e}`, 'error');
     throw e; // Re-throw the error for higher-level error handling
   }
 };

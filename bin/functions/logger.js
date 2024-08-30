@@ -58,7 +58,8 @@ const complete = (message) => {
 }
 
 const error = (message) => {
-    spinner.fail(`[${chalk.magentaBright('email-pipeline')}] ${message}`);
+    let type = 'error';
+    spinner.fail(`[${chalk.magentaBright('email-pipeline')}] ${colors[type](type.toUpperCase())}: ${message}`);
     previousSpinner = true;
 }
 
