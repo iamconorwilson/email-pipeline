@@ -2,8 +2,9 @@
 
 import { log, processLog } from './functions/logger.js';
 import { init } from './functions/init.js';
-import { removeFiles } from './functions/removefiles.js';
+import { removeFiles } from './functions/removeFiles.js';
 import { setOpts } from './functions/setOpts.js';
+import { formatDate } from './functions/formatDate.js';
 import debounce from 'debounce';
 
 const debug = process.argv.includes('--debug');
@@ -18,13 +19,13 @@ let reload = state.livereload;
 
 const run = async () => {
 
-    // removeFiles(options.dir.dest + '/**/*');
-
-    
     processLog.start('Running build...');
     const startTime = new Date();
 
+
     try {
+        await removeFiles(options.dir.dest + '/**/*');
+
         await state.sass.render();
 
         await state.postcss.render();
@@ -36,11 +37,12 @@ const run = async () => {
         await state.inlinecss.render();
 
         await state.cleanhtml.render();
+        
         reload.refresh('*');
 
         const endTime = new Date();
         const duration = (endTime - startTime) / 1000;
-        processLog.complete(`Build complete in ${duration.toFixed(2)}s`);
+        processLog.complete(`Build complete in ${duration.toFixed(2)}s at ${formatDate(endTime)}`);
 
     } catch (error) {
         processLog.error(`Build failed: ${error}`);

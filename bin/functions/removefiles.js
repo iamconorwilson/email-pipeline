@@ -1,39 +1,46 @@
-import { statSync, unlink, rmdirSync } from "fs";
-import { join } from "path";
-import { glob } from "glob";
-
+import { promises as fs } from "fs";
+import { sep as pathSep } from 'path';
+import { task } from "./task.js";
+import { log } from "console";
 
 const removeFiles = async (dir) => {
 
-    await glob(dir, async (err, files) => {
-        if (err) throw err;
+    await task('Remove Existing Files', async (utils) => {
+        const paths = await utils.getFiles(dir);
 
-        await files.forEach((file) => {
-            
-            //if file is a directory
-            if (statSync(file).isDirectory()) {
-                //skip if directory is css
-                if (file.endsWith('css')) {
-                    return;
+        const directories = await Promise.all(paths.map(async (path) => {
+            const stats = await fs.stat(path);
+            return stats.isDirectory() ? path : null;
+        })).then((dirs) => dirs.filter((dir) => dir !== null));
+
+        directories.sort((a, b) => b.split(pathSep).length - a.split(pathSep).length);
+
+        const files = paths.filter((path) => !directories.includes(path));
+
+            for (const file of files) {
+                try {
+                    await fs.unlink(file);
+                } catch (error) {
+                    log(`Error removing file: ${file} - ${error}`, 'warn');
                 }
-
-                //remove all files in directory
-                removeFiles(join(file, '*'));
-
-                //remove directory
-                rmdirSync(file);
-
-                return;
             }
 
-            //remove file
-            unlink(file, (err) => {
-                if (err) throw err;
-            });
+            for (const directory of directories) {
+                try {
+                    await fs.rmdir(directory);
+                } catch (error) {
+                    log(`Error removing directory: ${directory} - ${error}`, 'warn');
+                }
+            }
+        
 
-        });
+
+
     });
 
-}
+
+
+
+};
 
 export { removeFiles };

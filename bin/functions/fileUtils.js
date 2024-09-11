@@ -1,10 +1,10 @@
 import { mkdir, readFile, readFileSync, writeFileSync } from 'fs';
 import { dirname } from 'path';
-import { globSync } from 'glob';
+import { glob } from 'glob';
 import { log } from './logger.js';
 
-const getFiles = (src) => {
-    return globSync(src);
+const getFiles = async (src) => {
+    return await glob(src);
 }
 
 const readFromFile = (path) => {

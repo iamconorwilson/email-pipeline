@@ -77,7 +77,7 @@ const serverLog = async (port, qr, openlocal) => {
     log(`${chalk.bold('Development server started')}`)
 
     console.log(
-        `------------------------------------
+`------------------------------------
 ${chalk.blue('Local')}: ${local}
 ${chalk.blue('Network')}: ${ext}
 ------------------------------------`
