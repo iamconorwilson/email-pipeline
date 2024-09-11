@@ -21,7 +21,7 @@
     "connect-livereload": "^0.6.1",
     "debounce": "^2.1.0",
     "email-comb": "^7.0.21",
-    "express": "^4.19.2",
+    "express": "^5.0.0",
     "fs": "^0.0.1-security",
     "glob": "^11.0.0",
     "html-crush": "^6.0.19",

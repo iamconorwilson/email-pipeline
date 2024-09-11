@@ -19,6 +19,7 @@ class Nunjucks {
         this.customExt = context.nunjucks?.customExt ?? [];
         this.customFilters = context.nunjucks?.customFilters ?? [];
         this.customContext = context.nunjucks?.customTemplates ?? [];
+        this.customGlobals = context.nunjucks?.customGlobals ?? {};
 
         this.templates = [this.sourceDir, join(this.buildDir, 'css')].concat(this.customContext);
 
