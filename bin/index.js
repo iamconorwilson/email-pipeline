@@ -15,7 +15,7 @@ let options = await setOpts();
 let state = await init(options);
 
 let watch = state.watch;
-let reload = state.livereload;
+let reload = state.express.livereload;
 
 const run = async () => {
 

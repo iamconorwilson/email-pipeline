@@ -31,7 +31,7 @@ const init = async (options) => {
             const { default: Service } = await import(join(__dirname, `../services/${file}`));
             const instance = new Service(options, services);
             if (instance.init) {
-                let func = instance.init();
+                let func = await instance.init();
                 services[fileName] = func;
             }
         }
