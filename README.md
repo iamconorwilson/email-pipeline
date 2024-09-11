@@ -13,12 +13,12 @@ A comprehensive command line build tool for HTML email development using Nunjuck
  2. Create a `build.config.js` file in the root of your project and add the following code (for more configuration options, see the [docs](docs/config.md))
 ```js
 const  options = () => {
-	return {
-		dir: {
-			src:  "./src",
-			dest:  "./build"
-		}
-	}
+  return {
+    dir: {
+      src:  "./src",
+      dest:  "./build"
+    }
+  }
 };
 
 ```
