@@ -13,7 +13,7 @@ class Nunjucks {
         this.sourceDir = context.dir.src;
         this.dataDir = context.dir.data || join(this.sourceDir, 'data');
 
-        this.srcGlob = this.sourceDir + '/*.njk';
+        this.srcGlob = this.sourceDir + '/!(_*).njk';
 
         //environment
         this.customExt = context.nunjucks?.customExt ?? [];

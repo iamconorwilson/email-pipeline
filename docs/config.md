@@ -1,7 +1,7 @@
 
 # Configuration
 
-You can create an _optional_ `build.config.js` file in order to set custom options for your project. Here is the most basic version of this file. Additional options can be added to further customise your project.
+You can create an `build.config.js` file in order to set custom options for your project. Here is the most basic version of this file. Additional options can be added to further customise your project.
 
 ```js
 const options = () => {
@@ -19,7 +19,9 @@ export default options;
 
 ## Configuration Options
 
-### Source Directory
+### Directory Structure
+
+#### Source Directory
 
 Controls the top level directory/glob that we’ll use to look for emails to be rendered.
 
@@ -41,7 +43,7 @@ const options = () => {
 };
 ```
 
-### Destination Directory
+#### Destination Directory
 
 Sets the top level directory that emails and css will be rendered to. This will be created if it doesn't exist
 
@@ -63,7 +65,7 @@ const options = () => {
 };
 ```
 
-### Data Directory (optional)
+#### Data Directory (optional)
 
 Sets the directory for looking up data.json files
 
@@ -84,6 +86,29 @@ const options = () => {
   }
 };
 ```
+
+### Passthrough (optional)
+
+An array of source and destinations for passing through files without any modification. Useful for client override CSS or images/assets passed through from the source folder.
+
+|  |  |
+| --- | --- |
+| _Object Key_ | `passthrough` |
+| _Default Value_ | `[]` |
+| _Valid Options_ | An array of objects containing a src glob and a dest directory |
+
+#### Example
+
+```js
+const options = () => {
+  return {
+    passthrough: [
+	  { src: "./src/passthrough/*", dest: "./build/passthrough" }
+	]
+  }
+};
+```
+
 
 ### Nunjucks - Custom Templates (optional)
 
@@ -181,27 +206,7 @@ const options = () => {
 };
 ```
 
-### Passthrough (optional)
 
-An array of source and destinations for passing through files without any modification. Useful for client override CSS or image assets.
-
-|  |  |
-| --- | --- |
-| _Object Key_ | `passthrough` |
-| _Default Value_ | `[]` |
-| _Valid Options_ | An array of objects containing a src glob and a dest directory |
-
-#### Example
-
-```js
-const options = () => {
-  return {
-    passthrough: [
-	  { src: "./src/passthrough/*", dest: "./build/passthrough" }
-	]
-  }
-};
-```
 
 ### PostCSS - Custom Plugins (optional)
 

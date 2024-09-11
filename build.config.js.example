@@ -1,12 +1,9 @@
 const options = () => {
   return {
-    nunjucks: {
-        customExt: null,
-        customFilters: null,
-        customTemplates: null,
-    },
-    postcss: {
-        plugins: [],
+
+    dir: {
+        src: "./src",
+        dest: "./build",
     },
     passthrough: [
         {
@@ -14,22 +11,27 @@ const options = () => {
             dest: './build/passthrough'
         }
     ],
-    sass: {
-        customOpt: null,
-    },
-    cleanHtml: {
-        customOpt: null,
-    },
     server: {
         qrCode: true,
         port: 3030,
         openBrowser: false,
         middleware: []
     },
-    dir: {
-        src: "./src",
-        dest: "./build",
+    nunjucks: {
+        customExt: null,
+        customFilters: null,
+        customTemplates: null,
+    },
+    sass: {
+        customOpt: null,
+    },
+    postcss: {
+        plugins: [],
+    },
+    cleanHtml: {
+        customOpt: null,
     }
+    
   };
 };
 
