@@ -23,7 +23,7 @@ const run = async () => {
     const startTime = new Date();
 
 
-    // try {
+    try {
         await removeFiles(options.dir.dest + '/**/*');
 
         await state.sass.render();
@@ -44,10 +44,10 @@ const run = async () => {
         const duration = (endTime - startTime) / 1000;
         processLog.complete(`Build complete in ${duration.toFixed(2)}s at ${formatDate(endTime)}`);
 
-    // } catch (error) {
-        // processLog.error(`Build failed: ${error}`);
-        // process.exit(1);
-    // }
+    } catch (error) {
+        processLog.error(`Build failed: ${error}`);
+        process.exit(1);
+    }
 
 
     

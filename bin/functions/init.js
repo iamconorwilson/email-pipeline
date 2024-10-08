@@ -41,7 +41,7 @@ const init = async (options) => {
     if (options.htmlRenderer && services[options.htmlRenderer]) {
         services.htmlRenderer = services[options.htmlRenderer]; 
     } else {
-        log('No html renderer found, using nunjucks as default', 'error');
+        log('No html renderer found, using nunjucks as default', 'warn');
         services.htmlRenderer = services.nunjucks;
     }
 
