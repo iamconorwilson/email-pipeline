@@ -1,4 +1,4 @@
-import { mkdir, readFile, readFileSync, writeFileSync } from 'fs';
+import { mkdir, readFileSync, writeFileSync } from 'fs';
 import { dirname } from 'path';
 import { glob } from 'glob';
 import { log } from './logger.js';
@@ -11,14 +11,14 @@ const readFromFile = (path) => {
     return readFileSync(path, 'utf-8');
 }
 
-const writeFile = (path, fileName, data) => {
+const writeFile = async (path, fileName, data) => {
     mkdir(path, { recursive: true }, (err) => {
         if (err) {
             log(err, 'error');
+            return;
         }
+        writeFileSync(`${path}/${fileName}`, data);
     });
-
-    writeFileSync(`${path}/${fileName}`, data);
 }
 
 const findCommonRoot = (paths) => {

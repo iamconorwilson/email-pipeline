@@ -1,6 +1,6 @@
 {
   "name": "email-pipeline",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "",
   "main": "bin/index.js",
   "scripts": {
@@ -45,6 +45,7 @@
     "postcss-sort-media-queries": "^5.2.0",
     "prettier": "^3.3.3",
     "qrcode-terminal": "^0.12.0",
+    "rimraf": "^6.0.1",
     "sass": "^1.77.8",
     "serve-index": "^1.9.1",
     "serve-index-custom-directory": "^1.0.2"
