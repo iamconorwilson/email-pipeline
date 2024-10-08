@@ -1,5 +1,5 @@
 # Email Pipeline
-A comprehensive command line build tool for HTML email development using Nunjucks and Sass.
+A comprehensive command line build tool for HTML email development using Nunjucks or Handlebars for templating, Sass for styling, and JSON for data.
 * Create reusable components and modules using common web templating languages
 * Build and automate email campaigns using data from JSON files
 * Host files on a local development server with hot reloading for easier development
@@ -16,7 +16,7 @@ const  options = () => {
   return {
     dir: {
       src:  "./src",
-      dest:  "./build"
+      dest:  "./dist"
     }
   }
 };
@@ -27,7 +27,7 @@ const  options = () => {
 ``` npx email-pipeline ```
 
 ## Folder Setup
-The recommended folder structure is as below, but this can be customised to your needs.
+The recommended folder structure is as below for a nunjucks project, but this can be customised to your needs.
 ```
 src/
 ├── data/
@@ -35,9 +35,9 @@ src/
 ├── templates/
 └── email.njk
 ```
-The build tool will render Nunjucks files at the root of your source folder, and Sass files at the root of the Sass folder.  You can stop files from being rendered by prefixing the filename with an underscore (e.g. ``emails.njk`` will be rendered but ``_styles.scss`` will not).
+The build tool will render Nunjucks files at the root of your source folder, and Sass files at the root of the Sass folder. You can stop files from being rendered by prefixing the filename with an underscore (e.g. ``styles.scss`` will be rendered but ``_styles.scss`` will not).
 
-## Next Steps
+## TODO
 * Test email send function
-* Additional templating language options (mustache/handlebars, pug, tailwind, maizzle)
+* Additional templating language options (pug, tailwind, maizzle)
 * Debugging option, skipping the HTML Clean stage to assist with bug fixing.

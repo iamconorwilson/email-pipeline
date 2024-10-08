@@ -1,26 +1,30 @@
 const options = () => {
   return {
-
     dir: {
         src: "./src",
-        dest: "./build",
+        dest: "./dist",
     },
     passthrough: [
         {
             src: './src/passthrough/*',
-            dest: './build/passthrough'
+            dest: './dist/passthrough'
         }
     ],
     server: {
-        qrCode: true,
-        port: 3030,
-        openBrowser: false,
-        middleware: []
+        qrCode: true, 
+        port: 3030, 
+        openBrowser: false, 
+        middleware: [] 
     },
+    htmlRenderer: 'nunjucks',
     nunjucks: {
         customExt: null,
         customFilters: null,
-        customTemplates: null,
+        customGlobals: null,
+    },
+    handlebars: {
+        partialsDir: null,
+        helpersDir: null,
     },
     sass: {
         customOpt: null,

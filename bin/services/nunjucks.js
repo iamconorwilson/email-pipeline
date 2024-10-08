@@ -1,8 +1,7 @@
 import nunjucks from 'nunjucks';
-import { readFileSync } from 'fs';
 import { join, basename } from 'path';
 
-import { getData, getFilepaths } from '../functions/getdata.js';
+import { getData, getFilepaths } from '../functions/getData.js';
 import { task } from '../functions/task.js';
 
 class Nunjucks {
