@@ -2,8 +2,7 @@ import * as sass from 'sass';
 import { basename } from 'path';
 
 import { task } from '../functions/task.js';
-import { getSassData } from '../functions/getdata.js';
-import { deepMerge } from '../functions/deepmerge.js';
+import { getSassData } from '../functions/getData.js';
 
 class Sass {
     constructor(context) {

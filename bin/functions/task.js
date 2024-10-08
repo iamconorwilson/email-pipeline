@@ -1,6 +1,5 @@
 import { resolve as _resolve } from 'path';
 import * as utils from './fileUtils.js';
-import { displayError } from '../functions/errors.js';
 import { log, processLog } from '../functions/logger.js';
 
 

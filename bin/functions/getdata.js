@@ -21,6 +21,9 @@ const getData = (dirPath) => {
 const getFilepaths = (baseDir, type) => {
   if (!type) return;
   let dir = path.resolve(baseDir, type);
+
+  if (!fs.existsSync(dir)) return;
+
   const files = fs.readdirSync(dir);
   const data = {};
   for (const file of files) {
@@ -87,7 +90,29 @@ class getSassData {
     }
 }
 
+const getHelpers = (helpersDir) => {
+  let helpers = {}
+  fs.readdirSync(helpersDir, { encoding: "utf-8" })
+      .forEach((filepath) => {
+          let {name, fn} = require("../" + path.join(helpersDir, filepath))
+          helpers[name] = fn
+      })
+
+  return helpers
+}
+
+const getPartials = (partialsDir) => {
+  let partials = {}
+  fs.readdirSync(partialsDir, { encoding: "utf-8" })
+      .forEach((filepath) => {
+          let partialSource = fs.readFileSync(path.join(partialsDir, filepath), {encoding:"utf-8"})
+          let partialName = path.basename(filepath, ".hbs")
+          partials[partialName] = partialSource
+      })
+
+  return partials
+}
 
 
 
-export { getData, getSassData, getFilepaths };
+export { getData, getSassData, getFilepaths, getPartials, getHelpers };

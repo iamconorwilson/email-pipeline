@@ -1,9 +1,6 @@
 import inlineCss from 'inline-css';
 import { basename } from 'path';
 
-import ip from 'ip';
-const { address } = ip;
-
 import { task } from '../functions/task.js';
 
 class CssInline {

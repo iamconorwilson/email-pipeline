@@ -1,7 +1,7 @@
 import { promises as fs } from "fs";
 import { sep as pathSep } from 'path';
 import { task } from "./task.js";
-import { log } from "console";
+import { log } from "./logger.js";
 
 const removeFiles = async (dir) => {
 

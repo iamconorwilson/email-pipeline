@@ -1,4 +1,4 @@
-import { basename, dirname } from 'path';
+import { basename } from 'path';
 import { copyFile, mkdir } from 'fs';
 import { task } from '../functions/task.js';
 
@@ -20,7 +20,6 @@ class Passthrough {
 
 
         if (this.passthrough.length === 0) {
-            resolve();
             return;
         }
 

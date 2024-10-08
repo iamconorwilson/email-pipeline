@@ -1,8 +1,7 @@
 import nunjucks from 'nunjucks';
-import { readFileSync } from 'fs';
 import { join, basename } from 'path';
 
-import { getData, getFilepaths } from '../functions/getdata.js';
+import { getData, getFilepaths } from '../functions/getData.js';
 import { task } from '../functions/task.js';
 
 class Nunjucks {
@@ -13,7 +12,7 @@ class Nunjucks {
         this.sourceDir = context.dir.src;
         this.dataDir = context.dir.data || join(this.sourceDir, 'data');
 
-        this.srcGlob = this.sourceDir + '/*.njk';
+        this.srcGlob = this.sourceDir + '/!(_*).njk';
 
         //environment
         this.customExt = context.nunjucks?.customExt ?? [];
