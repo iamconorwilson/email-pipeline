@@ -12,6 +12,7 @@ const plugin = (opts = {}) => {
 
           if (otherRules.length) {
             newAtRule = atRule.clone({ params: otherRules.join(' and ') });
+            newAtRule.nodes = [];
           }
           
           let prevRootRule = atRule;
@@ -34,14 +35,15 @@ const plugin = (opts = {}) => {
             if (newAtRule) {
               newAtRule.append(newRule);
             } else {
-              atRule.parent.insertAfter(prevRootRule, newRule);
+              //add to the end of the file
+              prevRootRule.parent.append(newRule);
               prevRootRule = newRule;
             }
             
           });
 
           if (newAtRule) {
-            atRule.parent.insertAfter(atRule, newAtRule);
+            atRule.parent.append(newAtRule);
           }
         }
       }

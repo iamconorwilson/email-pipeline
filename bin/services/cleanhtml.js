@@ -8,7 +8,8 @@ import { deepMerge } from '../functions/deepmerge.js';
 
 //add default whitelist with [data-ogsb] and [data-ogsc] attributes
 let defaultOpts = {
-    whitelist: defaults.whitelist.concat(['[data-ogsb]*', '[data-ogsc]*', '.content*']),
+    // whitelist: defaults.whitelist.concat(['[data-ogsb]*', '[data-ogsc]*', '.content*']),
+    whitelist: defaults.whitelist,
     removeHTMLComments: false
 }
 
