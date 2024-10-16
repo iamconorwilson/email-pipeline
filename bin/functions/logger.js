@@ -48,16 +48,19 @@ const start = (message) => {
 }
 
 const update = (message) => {
+    if (!spinner) return console.log(message);
     spinner.text = `[${chalk.magentaBright('email-pipeline')}] ${message}`;
     previousSpinner = true;
 }
 
 const complete = (message) => {
+    if (!spinner) return console.log(message);
     spinner.succeed(`[${chalk.magentaBright('email-pipeline')}] ${message}`);
     previousSpinner = true;
 }
 
 const error = (message) => {
+    if (!spinner) return console.error(message);
     let type = 'error';
     spinner.fail(`[${chalk.magentaBright('email-pipeline')}] ${colors[type](type.toUpperCase())}: ${message}`);
     previousSpinner = true;

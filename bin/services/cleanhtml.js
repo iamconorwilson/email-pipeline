@@ -45,7 +45,7 @@ class CleanHtml {
                 let combString = combResult.result;
 
                 // Then apply prettify
-                let formattedString = await prettier.format(combString, { parser: 'html', printWidth: 900, htmlWhitespaceSensitivity: 'ignore', singleQuote: true });
+                let formattedString = await prettier.format(combString, { parser: 'html', printWidth: 900, htmlWhitespaceSensitivity: 'css', singleQuote: true });
         
                 await writeFile(this.buildDir, fileName, formattedString);
             }

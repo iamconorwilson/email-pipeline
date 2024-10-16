@@ -39,5 +39,6 @@ The build tool will render Nunjucks files at the root of your source folder, and
 
 ## TODO
 * Test email send function
-* Additional templating language options (pug, tailwind, maizzle)
+* Additional templating language options (pug, tailwind, maizzle, vanilla html/css)
 * Debugging option, skipping the HTML Clean stage to assist with bug fixing.
+* Init command to create a build.config.js file and load a starter template based on chosen templating languages.
