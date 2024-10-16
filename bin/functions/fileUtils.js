@@ -1,10 +1,10 @@
 import { mkdir, readFileSync, writeFileSync } from 'fs';
 import { dirname } from 'path';
-import { glob } from 'glob';
+import { globby } from 'globby';
 import { log } from './logger.js';
 
 const getFiles = async (src) => {
-    return await glob(src);
+    return await globby(src);
 }
 
 const readFromFile = (path) => {
@@ -12,13 +12,8 @@ const readFromFile = (path) => {
 }
 
 const writeFile = async (path, fileName, data) => {
-    mkdir(path, { recursive: true }, (err) => {
-        if (err) {
-            log(err, 'error');
-            return;
-        }
-        writeFileSync(`${path}/${fileName}`, data);
-    });
+    mkdir(path, { recursive: true }, (err) => { if (err) return log(err, 'error'); });
+    writeFileSync(`${path}/${fileName}`, data);
 }
 
 const findCommonRoot = (paths) => {
@@ -34,8 +29,5 @@ const findCommonRoot = (paths) => {
 
     return common;
 }
-
-
-
 
 export { getFiles, readFromFile, writeFile, findCommonRoot };

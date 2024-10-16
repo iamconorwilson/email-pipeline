@@ -2,7 +2,7 @@ import * as sass from 'sass';
 import { basename } from 'path';
 
 import { task } from '../functions/task.js';
-import { getSassData } from '../functions/getData.js';
+import { getSassData } from '../plugins/sass/getSassData.js';
 
 class Sass {
     constructor(context) {

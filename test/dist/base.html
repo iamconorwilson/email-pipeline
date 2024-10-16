@@ -12,12 +12,50 @@
         background-color: #f0f0f0;
         font-family: sans-serif;
       }
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #333;
+          color: #fff;
+        }
+        h1 {
+          color: #fff;
+        }
+        .text {
+          color: red;
+        }
+        h2 {
+          color: blue;
+        }
+      }
+      @media (prefers-color-scheme: dark) and (max-width: 600px) {
+        .text {
+          color: blue;
+        }
+      }
+      [data-ogsb] body {
+        background-color: #333;
+        color: #fff;
+      }
+      [data-ogsb] h1 {
+        color: #fff;
+      }
+      [data-ogsb] .text {
+        color: red;
+      }
+      [data-ogsb] h2 {
+        color: blue;
+      }
+      @media (max-width: 600px) {
+        [data-ogsb] .text {
+          color: blue;
+        }
+      }
     </style>
-    <link rel="stylesheet" href="css/inline.css" />
   </head>
   <body>
-    <h1>Testing Module2</h1>
-    <p>Test Data</p>
+    <h1>Testing Module</h1>
+    <p style="font-size: 20px">Test Data</p>
+    <p class="text" style="font-size: 20px">test <span style="font-weight: bold">test</span>.</p>
     <img src="images/image1.jpg" alt="" width="200" />
   </body>
 </html>

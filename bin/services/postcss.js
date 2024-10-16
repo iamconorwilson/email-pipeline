@@ -7,7 +7,7 @@ import emailDarkmode from '../plugins/postcss/postcss-email-darkmode.js';
 
 import { task } from '../functions/task.js';
 
-const defaultPlugins = [ autoprefixer, sortMediaQueries({ sort: 'desktop-first', onlyTopLevel: true }), emailDarkmode ];
+const defaultPlugins = [ autoprefixer, emailDarkmode ];
 
 class PostCss {
     constructor(context) {

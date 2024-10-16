@@ -8,7 +8,8 @@ import { deepMerge } from '../functions/deepmerge.js';
 
 //add default whitelist with [data-ogsb] and [data-ogsc] attributes
 let defaultOpts = {
-    whitelist: defaults.whitelist.concat(['[data-ogsb]*', '[data-ogsc]*', '.content*']),
+    // whitelist: defaults.whitelist.concat(['[data-ogsb]*', '[data-ogsc]*', '.content*']),
+    whitelist: defaults.whitelist,
     removeHTMLComments: false
 }
 
@@ -45,7 +46,7 @@ class CleanHtml {
                 let combString = combResult.result;
 
                 // Then apply prettify
-                let formattedString = await prettier.format(combString, { parser: 'html', printWidth: 900, htmlWhitespaceSensitivity: 'ignore', singleQuote: true });
+                let formattedString = await prettier.format(combString, { parser: 'html', printWidth: 900, htmlWhitespaceSensitivity: 'css', singleQuote: true });
         
                 await writeFile(this.buildDir, fileName, formattedString);
             }

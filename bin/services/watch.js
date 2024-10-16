@@ -10,7 +10,7 @@ class Watch {
     }
 
     init() {
-        const watcher = this.chokidar.watch(this.sourceDir, {
+        const watcher = this.chokidar.watch([this.sourceDir], {
             ignoreInitial: true,
         });
 

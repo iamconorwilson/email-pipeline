@@ -4,3 +4,30 @@ body {
     background-color: #f0f0f0;
     font-family: sans-serif;
 }
+
+.test-2 {
+    background: rebeccapurple
+}
+
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #333;
+        color: #fff;
+    }
+    h1{
+        color: #fff;
+    }
+    .text {
+        color: red
+    }
+    h2 {
+        color: blue;
+    }
+}
+
+@media (prefers-color-scheme: dark) and (max-width: 600px) {
+    .text {
+        color: blue;
+    }
+}
