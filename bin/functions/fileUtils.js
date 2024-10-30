@@ -1,4 +1,4 @@
-import { mkdir, readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync, promises } from 'fs';
 import { dirname } from 'path';
 import { globby } from 'globby';
 import { log } from './logger.js';
@@ -12,7 +12,7 @@ const readFromFile = (path) => {
 }
 
 const writeFile = async (path, fileName, data) => {
-    mkdir(path, { recursive: true }, (err) => { if (err) return log(err, 'error'); });
+    await promises.mkdir(path, { recursive: true }, (err) => { if (err) return log(err, 'error'); });
     writeFileSync(`${path}/${fileName}`, data);
 }
 

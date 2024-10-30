@@ -27,7 +27,7 @@ const  options = () => {
 ``` npx email-pipeline ```
 
 ## Folder Setup
-The recommended folder structure is as below for a nunjucks project, but this can be customised to your needs.
+The recommended folder structure is as below for a Nunjucks project, but this can be customised to your needs.
 ```
 src/
 ├── data/
@@ -35,10 +35,14 @@ src/
 ├── templates/
 └── email.njk
 ```
-The build tool will render Nunjucks files at the root of your source folder, and Sass files at the root of the Sass folder. You can stop files from being rendered by prefixing the filename with an underscore (e.g. ``styles.scss`` will be rendered but ``_styles.scss`` will not).
+The build tool will render Nunjucks files at the root of your source folder, and Sass files at the root of the Sass folder. You can stop files from being rendered by prefixing the filename with an underscore (e.g. `styles.scss` will be rendered but `_styles.scss` will not).
 
-## TODO
-* Test email send function
+## Command Line Options
+The build tool can be run with the following options:
+* `--env <env>`: Set the environment to build for. Set to `dev` to skip minification step for bugfixing. (default: `prod`)
+
+## TODOs
+* Test email send function?
+* Deploy script to upload to an email service provider?
 * Additional templating language options (pug, tailwind, maizzle, vanilla html/css)
-* Debugging option, skipping the HTML Clean stage to assist with bug fixing.
 * Init command to create a build.config.js file and load a starter template based on chosen templating languages.

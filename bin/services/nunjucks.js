@@ -3,6 +3,7 @@ import { join, basename } from 'path';
 
 import { getData, getFilepaths } from '../functions/getData.js';
 import { task } from '../functions/task.js';
+import { displayError } from '../functions/errors.js';
 
 class Nunjucks {
     constructor(context) {
@@ -51,27 +52,36 @@ class Nunjucks {
     }
 
     async render() {
-        
-            await task('Nunjucks Render', async (utils) => {
-                
-                let { getFiles, readFromFile, writeFile } = utils;
 
-                let files = await getFiles(this.srcGlob);
+        await task('Nunjucks Render', async (utils) => {
 
-                let data = {css: getFilepaths(this.buildDir, 'css'), ...getData(this.dataDir)};
-                
-                for await (const file of files) {
-                    
-                    let fileName = basename(file, '.njk') + '.html';
-                    
-                    let fileString = await readFromFile(file);
-                    
-                    let string = this.env.renderString(fileString, data);
-                    await writeFile(this.buildDir, fileName, string);
-                    
-                };
-                
-            });
+            let { getFiles, readFromFile, writeFile } = utils;
+
+            let files = await getFiles(this.srcGlob);
+
+            let data = { css: getFilepaths(this.buildDir, 'css'), ...getData(this.dataDir) };
+
+            for await (const file of files) {
+
+                let fileName = basename(file, '.njk') + '.html';
+
+                let fileString = await readFromFile(file);
+
+                let string;
+
+                try {
+                    string = this.env.renderString(fileString, data);
+                } catch (error) {
+                    displayError('nunjucksRender', error, file);
+                }
+
+                await writeFile(this.buildDir, fileName, string);
+
+
+
+            };
+
+        });
     }
 }
 

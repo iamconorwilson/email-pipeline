@@ -7,6 +7,8 @@ import { setOpts } from './functions/setOpts.js';
 import { formatDate } from './functions/formatDate.js';
 import debounce from 'debounce';
 
+
+
 const debug = process.argv.includes('--debug');
 if (debug) log('Debug mode enabled', 'info');
 

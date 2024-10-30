@@ -3,6 +3,7 @@ import { basename } from 'path';
 
 import { task } from '../functions/task.js';
 import { getSassData } from '../plugins/sass/getSassData.js';
+import { displayError } from '../functions/errors.js';
 
 class Sass {
     constructor(context) {
@@ -22,16 +23,27 @@ class Sass {
     }
     async render() {
         await task('Sass Render', async (utils) => {
-            let { getFiles, writeFile } = utils;
+            let { getFiles, readFromFile, writeFile } = utils;
             
             let files = await getFiles(this.sourceDir + '/sass/!(_*).scss');
             
             for (const file of files) {
                 let outputStyle = 'compressed';
                 let fileName = basename(file, '.scss') + '.css';
+
+                const fileString = await readFromFile(file);
+
                 const opts = this.sassOpts ?? { style: outputStyle, importers: [ new getSassData({ dataDir: this.dataDir }) ] };
         
-                let string = this.sass.compile(file, opts).css;
+                let string;
+
+                try {
+                    string = this.sass.compileString(fileString, opts).css;
+                } catch (error) {
+                    displayError('sassRender', error, file);
+                    
+                }
+
                 await writeFile(this.buildDir + '/css', fileName, string);
             }
         });

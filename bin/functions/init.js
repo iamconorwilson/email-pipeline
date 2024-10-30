@@ -25,6 +25,11 @@ const init = async (options) => {
         mkdirSync(join(options.dir.dest, 'css')); 
     }
 
+    // set environment based on --env flag
+    options.env = process.argv.includes('--env') ? process.argv[process.argv.indexOf('--env') + 1] : 'prod';
+    log(`Environment set to '${options.env}'`, 'info');
+
+    // import all services
     const files = readdirSync(join( __dirname, '../services'));
     for await (const file of files) {
         if (file.endsWith('.js')) {
@@ -38,6 +43,7 @@ const init = async (options) => {
         }
     }
 
+    // set html renderer based on config, else use nunjucks as default
     if (options.htmlRenderer && services[options.htmlRenderer]) {
         services.htmlRenderer = services[options.htmlRenderer]; 
     } else {
