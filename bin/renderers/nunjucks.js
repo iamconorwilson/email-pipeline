@@ -3,7 +3,6 @@ import { join, basename } from 'path';
 
 import { getData, getFilepaths } from '../functions/getData.js';
 import { task } from '../functions/task.js';
-import { displayError } from '../functions/errors.js';
 
 class Nunjucks {
     constructor(context) {
@@ -76,7 +75,7 @@ class Nunjucks {
                 try {
                     string = this.env.renderString(fileString, data);
                 } catch (error) {
-                    displayError('nunjucksRender', error, file);
+                    throw new Error(`Nunjucks Render: ${error}`);
                 }
 
                 await writeFile(this.buildDir, fileName, string);

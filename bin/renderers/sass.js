@@ -3,8 +3,6 @@ import { basename } from 'path';
 
 import { task } from '../functions/task.js';
 import { getSassData } from '../plugins/sass/getSassData.js';
-import { displayError } from '../functions/errors.js';
-import { processLog } from '../functions/logger.js';
 
 class Sass {
     constructor(context) {
@@ -45,8 +43,7 @@ class Sass {
                 try {
                     string = this.sass.compileString(fileString, opts).css;
                 } catch (error) {
-                    displayError('sassRender', error, file);
-                    
+                    throw new Error(`Sass Render: ${error}`);
                 }
 
                 await writeFile(this.buildDir + '/css', fileName, string);
