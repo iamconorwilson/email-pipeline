@@ -1,10 +1,11 @@
 import { task } from "./task.js";
-import { rimrafSync } from "rimraf";
+import { rimraf } from "rimraf";
+import { promises as fs } from "fs";
 
 const removeFiles = async (dir) => {
     await task('Remove Existing Files', async (utils) => {
-        const paths = await utils.getFiles(dir);
-        rimrafSync(paths);
+        await rimraf(dir);
+        await fs.mkdir(dir, { recursive: true });
     });
 };
 

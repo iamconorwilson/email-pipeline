@@ -26,7 +26,7 @@ const run = async () => {
 
 
     try {
-        await removeFiles(options.dir.dest + '/**/*');
+        await removeFiles(options.dir.dest);
 
         await state.sass.render();
 
