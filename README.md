@@ -42,7 +42,6 @@ The build tool can be run with the following options:
 * `--env <env>`: Set the environment to build for. Set to `dev` to skip minification step for bugfixing. (default: `prod`)
 
 ## TODOs
-* Test email send function?
-* Deploy script to upload to an email service provider?
-* Additional templating language options (pug, tailwind, maizzle, vanilla html/css)
+* Additional templating language options (pug, tailwind, maizzle)
+* Documentation for each templating languages implementation
 * Init command to create a build.config.js file and load a starter template based on chosen templating languages.

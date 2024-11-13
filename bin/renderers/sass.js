@@ -4,6 +4,7 @@ import { basename } from 'path';
 import { task } from '../functions/task.js';
 import { getSassData } from '../plugins/sass/getSassData.js';
 import { displayError } from '../functions/errors.js';
+import { processLog } from '../functions/logger.js';
 
 class Sass {
     constructor(context) {
@@ -26,6 +27,10 @@ class Sass {
             let { getFiles, readFromFile, writeFile } = utils;
             
             let files = await getFiles(this.sourceDir + '/sass/!(_*).scss');
+
+            if (!files.length) { 
+                throw new Error('Sass Render: No files found in source directory');
+            }
             
             for (const file of files) {
                 let outputStyle = 'compressed';

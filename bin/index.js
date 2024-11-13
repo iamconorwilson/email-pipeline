@@ -7,8 +7,6 @@ import { setOpts } from './functions/setOpts.js';
 import { formatDate } from './functions/formatDate.js';
 import debounce from 'debounce';
 
-
-
 const debug = process.argv.includes('--debug');
 if (debug) log('Debug mode enabled', 'info');
 
@@ -28,7 +26,7 @@ const run = async () => {
     try {
         await removeFiles(options.dir.dest);
 
-        await state.sass.render();
+        await state.cssRenderer.render();
 
         await state.postcss.render();
 
@@ -51,12 +49,9 @@ const run = async () => {
         process.exit(1);
     }
 
-
-    
 }
 
 const debouncedRun = debounce(run, 500);
-
 watch.on('add', debouncedRun).on('change', debouncedRun)
 
 run();

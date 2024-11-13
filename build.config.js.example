@@ -17,6 +17,7 @@ const options = () => {
         middleware: [] 
     },
     htmlRenderer: 'nunjucks',
+    cssRenderer: 'sass',
     nunjucks: {
         customExt: null,
         customFilters: null,

@@ -59,6 +59,10 @@ class Nunjucks {
 
             let files = await getFiles(this.srcGlob);
 
+            if (!files.length) {
+                throw new Error('Nunjucks Render: No files found in source directory');
+            }
+
             let data = { css: getFilepaths(this.buildDir, 'css'), ...getData(this.dataDir) };
 
             for await (const file of files) {

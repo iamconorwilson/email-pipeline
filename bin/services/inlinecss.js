@@ -1,6 +1,6 @@
 import inlineCss from 'inline-css';
-import { basename } from 'path';
-
+import { basename, join } from 'path';
+import { readFromFile } from '../functions/fileUtils.js';
 import { task } from '../functions/task.js';
 
 class CssInline {
@@ -13,7 +13,7 @@ class CssInline {
 
         this.port = services.express.port ?? 3030;
 
-        this.inlineOpts =  {
+        this.inlineOpts = {
             url: `http://localhost:${this.port}`,
             applyStyleTags: false,
             removeStyleTags: false,
@@ -27,6 +27,20 @@ class CssInline {
     init() {
         return { render: this.render }
     }
+
+    embedCSS(htmlContent) {
+        const linkRegex = /<link\s+[^>]*rel=["']stylesheet["'][^>]*href=["']((?!http:\/\/|https:\/\/)[^"']+)["'][^>]*data-embed[^>]*>/gi;
+        let match;
+        while ((match = linkRegex.exec(htmlContent)) !== null) {
+            const href = match[1];
+            const cssFilePath = join(this.buildDir, href);
+            const cssContent = readFromFile(cssFilePath);
+            const styleTag = `<style>\n${cssContent}\n</style>`;
+            htmlContent = htmlContent.replace(match[0], styleTag);
+        }
+        return htmlContent;
+    }
+
     async render() {
         await task('Inline CSS', async (utils) => {
             let { getFiles, readFromFile, writeFile } = utils;
@@ -36,9 +50,14 @@ class CssInline {
             for await (const file of files) {
                 let fileString = await readFromFile(file);
                 let fileName = basename(file);
-                let string = '';
-                await this.inlineCss(fileString, this.inlineOpts).then((html) => {string = html});
-                await writeFile(this.buildDir, fileName, string);
+
+                //embed css in link tags with data-embed attribute
+                fileString = this.embedCSS(fileString);
+
+                //inline remaining link tags
+                await this.inlineCss(fileString, this.inlineOpts).then((html) => {fileString = html});
+
+                await writeFile(this.buildDir, fileName, fileString);
             };
         });
     }
