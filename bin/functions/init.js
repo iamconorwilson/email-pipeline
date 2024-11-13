@@ -6,7 +6,7 @@ import { log } from './logger.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const services = [];
+const state = [];
 
 const init = async (options) => {
 
@@ -25,27 +25,54 @@ const init = async (options) => {
         mkdirSync(join(options.dir.dest, 'css')); 
     }
 
-    const files = readdirSync(join( __dirname, '../services'));
-    for await (const file of files) {
-        if (file.endsWith('.js')) {
-            const fileName = basename(file, '.js');
-            const { default: Service } = await import(join(__dirname, `../services/${file}`));
-            const instance = new Service(options, services);
-            if (instance.init) {
-                let func = await instance.init();
-                services[fileName] = func;
-            }
-        }
+    // set environment based on --env flag
+    options.env = process.argv.includes('--env') ? process.argv[process.argv.indexOf('--env') + 1] : 'prod';
+    log(`Environment set to '${options.env}'`, 'info');
+
+    // import all services
+    const services = readdirSync(join( __dirname, '../services'));
+    for (const service of services) {
+        await getService(service, options, 'services');
     }
 
-    if (options.htmlRenderer && services[options.htmlRenderer]) {
-        services.htmlRenderer = services[options.htmlRenderer]; 
+    // import all renderers
+    const renderers = readdirSync(join( __dirname, '../renderers'));
+    for (const renderer of renderers) {
+        await getService(renderer, options, 'renderers');
+    }
+    
+
+    // set html renderer based on config, else use nunjucks as default
+    if (options.htmlRenderer && state[options.htmlRenderer]) {
+        state.htmlRenderer = state[options.htmlRenderer]; 
     } else {
         log('No html renderer found, using nunjucks as default', 'warn');
-        services.htmlRenderer = services.nunjucks;
+        state.htmlRenderer = state.nunjucks;
     }
 
-    return services;
+    // set css renderer based on config, else use vanillaCss as default
+    if (options.cssRenderer && state[options.cssRenderer]) {
+        state.cssRenderer = state[options.cssRenderer];
+    } else {
+        log('No css renderer found, using vanillaCss as default', 'warn');
+        state.cssRenderer = state.vanillaCss;
+    }
+
+    return state;
+}
+
+const getService = async (file, options, rootDir) => {
+
+    if (!file.endsWith('.js')) return;
+    const fileName = file.replace('.js', '');
+    const { default: Service } = await import(join(__dirname, `../${rootDir}/${file}`));
+    const instance = new Service(options, state);
+    if (instance.init) {
+        let func = await instance.init();
+        state[fileName] = func;
+    } else {
+        state[fileName] = instance;
+    }
 }
 
 export { init };

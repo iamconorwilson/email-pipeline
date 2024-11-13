@@ -1,5 +1,3 @@
-# Configuration
-
 You can create an `build.config.js` file in order to set custom options for your project. Here is the most basic version of this file. Additional options can be added to further customise your project.
 
 ```js
@@ -16,7 +14,7 @@ const options = () => {
 export default options;
 ```
 
-## Configuration Options
+## Options
 
 ### Directory Structure
 
@@ -29,8 +27,8 @@ Controls the top level directory/glob that we’ll use to look for emails to be 
 | _Object Key_    | `dir.src`            |
 | _Default Value_ | `./src`              |
 | _Valid Options_ | Any valid directory. |
-
-#### Example
+ 
+**Example**
 
 ```js
 const options = () => {
@@ -52,7 +50,7 @@ Sets the top level directory that emails and css will be rendered to. This will 
 | _Default Value_ | `./dist`            |
 | _Valid Options_ | Any valid directory. |
 
-#### Example
+**Example**
 
 ```js
 const options = () => {
@@ -74,7 +72,7 @@ Sets the directory for looking up data.json files
 | _Default Value_ | `./src/data`         |
 | _Valid Options_ | Any valid directory. |
 
-#### Example
+**Example**
 
 ```js
 const options = () => {
@@ -96,7 +94,7 @@ An array of source and destinations for passing through files without any modifi
 | _Default Value_ | `[]`                                                           |
 | _Valid Options_ | An array of objects containing a src glob and a dest directory |
 
-#### Example
+**Example**
 
 ```js
 const options = () => {
@@ -108,15 +106,34 @@ const options = () => {
 
 ### HTML Renderer
 
-Set the HTML renderer to be used. Options are `nunjucks` or `handlebars`. Defaults to `nunjucks`.
+Set the HTML renderer to be used. Options are `nunjucks`, `handlebars` or `vanillaHtml`. Defaults to `nunjucks`.
 
-|                 |                            |
-| --------------- | -------------------------- |
-| _Object Key_    | `htmlRenderer`             |
-| _Default Value_ | `nunjucks`                 |
-| _Valid Options_ | `nunjucks` or `handlebars` |
+|                 |                                         |
+| --------------- | --------------------------------------- |
+| _Object Key_    | `htmlRenderer`                          |
+| _Default Value_ | `nunjucks`                              |
+| _Valid Options_ | `nunjucks`, `handlebars`, `vanillaHtml` |
 
-#### Example
+**Example**
+
+```js
+const options = () => {
+  return {
+    htmlRenderer: "nunjucks",
+  };
+};
+```
+### CSS Renderer
+
+Set the CSS renderer to be used. Options are `sass` or `vanillaCss`. Defaults to `sass`.
+
+|                 |                        |
+| --------------- | ---------------------- |
+| _Object Key_    | `cssRenderer`          |
+| _Default Value_ | `sass`                 |
+| _Valid Options_ | `sass` or `vanillaCss` |
+
+**Example**
 
 ```js
 const options = () => {
@@ -126,7 +143,9 @@ const options = () => {
 };
 ```
 
-### Nunjucks - Custom Templates (optional)
+### Nunjucks Options
+
+#### Custom Templates (optional)
 
 Array of additional template directories to be accessed by nunjucks. Set in addition to the default `./src/templates` directory.
 
@@ -136,7 +155,7 @@ Array of additional template directories to be accessed by nunjucks. Set in addi
 | _Default Value_ | `[]`                       |
 | _Valid Options_ | Array of valid directories |
 
-#### Example
+**Example**
 
 ```js
 const options = () => {
@@ -148,7 +167,7 @@ const options = () => {
 };
 ```
 
-### Nunjucks - Custom Filters (optional)
+#### Custom Filters (optional)
 
 Array of custom filter options passed to the nunjucks render function. See [nunjucks custom filter](https://mozilla.github.io/nunjucks/api.html#custom-filters) documentation.
 
@@ -158,7 +177,7 @@ Array of custom filter options passed to the nunjucks render function. See [nunj
 | _Default Value_ | `[]`                                                             |
 | _Valid Options_ | An array containing functions as per the nunjucks documentation. |
 
-#### Example
+**Example**
 
 ```js
 const options = () => {
@@ -183,7 +202,7 @@ Array of custom extensions passed to the nunjucks render function. See [nunjucks
 | _Default Value_ | `[]`                                                             |
 | _Valid Options_ | An array containing functions as per the nunjucks documentation. |
 
-#### Example
+**Example**
 
 ```js
 const options = () => {
@@ -198,7 +217,7 @@ const options = () => {
 };
 ```
 
-### Nunjucks - Custom Globals (optional)
+#### Custom Globals (optional)
 
 Array of global variables passed to the nunjucks render function. See [nunjucks custom globals](https://mozilla.github.io/nunjucks/api.html#addglobal) documentation.
 
@@ -208,7 +227,7 @@ Array of global variables passed to the nunjucks render function. See [nunjucks 
 | _Default Value_ | `[]`                     |
 | _Valid Options_ | Array of key value pairs |
 
-#### Example
+**Example**
 
 ```js
 const options = () => {
@@ -223,7 +242,9 @@ const options = () => {
 };
 ```
 
-### Handlebars - Custom Partials (optional)
+### Handlebars Options
+
+#### Custom Partials (optional)
 
 Array of additional partial directories to be accessed by handlebars. Set in addition to the default `./src/partials` directory.
 
@@ -233,7 +254,7 @@ Array of additional partial directories to be accessed by handlebars. Set in add
 | _Default Value_ | `[]`                        |
 | _Valid Options_ | Array of valid directories  |
 
-#### Example
+**Example**
 
 ```js
 const options = () => {
@@ -245,7 +266,7 @@ const options = () => {
 };
 ```
 
-### Handlebars - Custom Helpers (optional)
+#### Custom Helpers (optional)
 
 Array of additional helper directories to be accessed by handlebars. Set in addition to the default `./src/herlpers` directory.
 
@@ -255,7 +276,7 @@ Array of additional helper directories to be accessed by handlebars. Set in addi
 | _Default Value_ | `[]`                       |
 | _Valid Options_ | Array of valid directories |
 
-#### Example
+**Example**
 
 ```js
 const options = () => {
@@ -277,7 +298,7 @@ Custom options passed to the sass render function. See [sass options](https://sa
 | _Default Value_ | `{}`                                                        |
 | _Valid Options_ | An object containing options as per the sass documentation. |
 
-#### Example
+**Example**
 
 ```js
 const options = () => {
@@ -301,7 +322,7 @@ Custom plugins passed to the PostCSS function. These will be added to the defaul
 | _Default Value_ | `[]`                                    |
 | _Valid Options_ | An array of functions passed to PostCSS |
 
-#### Example
+**Example**
 
 ```js
 const options = () => {
@@ -323,7 +344,7 @@ An object of options passed directly to the emailcomb function. See [emailcomb](
 | _Default Value_ | _see below_                           |
 | _Valid Options_ | Options object for emailcomb function |
 
-#### Example
+**Example**
 
 ```js
 const options = () => {
@@ -350,7 +371,9 @@ const options = () => {
 };
 ```
 
-### Server - Port (optional)
+### Server Options
+
+#### Port (optional)
 
 Port number for the development server. Defaults to `3030`. If the port is unavailable, we increment the port until a free one is found.
 
@@ -360,7 +383,7 @@ Port number for the development server. Defaults to `3030`. If the port is unava
 | _Default Value_ | `3030`                   |
 | _Valid Options_ | An available port number |
 
-#### Example
+**Example**
 
 ```js
 const options = () => {
@@ -372,7 +395,7 @@ const options = () => {
 };
 ```
 
-### Server - QR Code (optional)
+#### QR Code (optional)
 
 Show a QR code in the terminal for the external IP. This makes it easier to connect and preview on a mobile device.
 
@@ -382,7 +405,7 @@ Show a QR code in the terminal for the external IP. This makes it easier to conn
 | _Default Value_ | `true`          |
 | _Valid Options_ | Boolean         |
 
-#### Example
+**Example**
 
 ```js
 const options = () => {
@@ -394,7 +417,7 @@ const options = () => {
 };
 ```
 
-### Server - Open in Browser (optional)
+#### Open in Browser (optional)
 
 Open the browser automatically when the server starts.
 
@@ -404,7 +427,7 @@ Open the browser automatically when the server starts.
 | _Default Value_ | `false`              |
 | _Valid Options_ | Boolean              |
 
-#### Example
+**Example**
 
 ```js
 const options = () => {
@@ -416,7 +439,7 @@ const options = () => {
 };
 ```
 
-### Server - Middleware (optional)
+#### Middleware (optional)
 
 An array of middleware functions passed to the Express server. See [Express](https://expressjs.com/en/guide/using-middleware.html) documentation.
 
@@ -426,7 +449,7 @@ An array of middleware functions passed to the Express server. See [Express](htt
 | _Default Value_ | `[]`                                |
 | _Valid Options_ | Array of valid middleware functions |
 
-#### Example
+**Example**
 
 ```js
 const options = () => {

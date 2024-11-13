@@ -22,16 +22,30 @@ class Sass {
     }
     async render() {
         await task('Sass Render', async (utils) => {
-            let { getFiles, writeFile } = utils;
+            let { getFiles, readFromFile, writeFile } = utils;
             
             let files = await getFiles(this.sourceDir + '/sass/!(_*).scss');
+
+            if (!files.length) { 
+                throw new Error('Sass Render: No files found in source directory');
+            }
             
             for (const file of files) {
                 let outputStyle = 'compressed';
                 let fileName = basename(file, '.scss') + '.css';
+
+                const fileString = await readFromFile(file);
+
                 const opts = this.sassOpts ?? { style: outputStyle, importers: [ new getSassData({ dataDir: this.dataDir }) ] };
         
-                let string = this.sass.compile(file, opts).css;
+                let string;
+
+                try {
+                    string = this.sass.compileString(fileString, opts).css;
+                } catch (error) {
+                    throw new Error(`Sass Render: ${error}`);
+                }
+
                 await writeFile(this.buildDir + '/css', fileName, string);
             }
         });

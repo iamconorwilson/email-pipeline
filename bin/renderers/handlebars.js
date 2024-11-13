@@ -34,6 +34,10 @@ class Handlebars {
 
                 let files = await getFiles(this.srcGlob);
 
+                if (!files.length) {
+                    throw new Error('Handlebars Render: No files found in source directory');
+                }
+
                 let data = getData(this.dataDir);
                 let partials = getPartials(this.partialsDir);
                 let helpers = getHelpers(this.helpersDir);

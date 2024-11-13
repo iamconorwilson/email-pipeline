@@ -2,10 +2,22 @@ import chalk from 'chalk';
 import ora from 'ora';
 
 const colors = {
-    error: chalk.red,
-    warn: chalk.yellow,
-    info: chalk.blue,
-    success: chalk.green,
+    error: {
+        color: chalk.red,
+        message: 'ERROR'
+    },
+    warn: {
+        color: chalk.yellow,
+        message: 'WARN'
+    },
+    info: {
+        color: chalk.blue,
+        message: 'INFO'
+    },
+    success: {
+        color: chalk.green,
+        message: 'SUCCESS'
+    },
 };
 
 let spinner;
@@ -19,7 +31,8 @@ const log = (message, type) => {
     }
 
     if (type && type in colors) {
-        console.log(`[${chalk.magentaBright('email-pipeline')}] ${colors[type](type.toUpperCase())}: ${message}`);
+        const msgType = colors[type];
+        console.log(`[${chalk.magentaBright('email-pipeline')}] ${msgType.color(msgType.message)}: ${message}`);
     } else {
         console.log(`[${chalk.magentaBright('email-pipeline')}] ${message}`);
     }
@@ -30,47 +43,39 @@ const log = (message, type) => {
     }
 };
 
-const start = (message) => {
-    if (previousSpinner && !debug) {
-        process.stdout.moveCursor(0, -1);
-        process.stdout.clearLine();
-    }
-
-    const text = `[${chalk.magentaBright('email-pipeline')}] ${message}`;
-
-
-    spinner = ora({
-        text: text,
-        spinner: 'dots'
-    }).start();
-
-    previousSpinner = true;
-}
-
-const update = (message) => {
-    if (!spinner) return console.log(message);
-    spinner.text = `[${chalk.magentaBright('email-pipeline')}] ${message}`;
-    previousSpinner = true;
-}
-
-const complete = (message) => {
-    if (!spinner) return console.log(message);
-    spinner.succeed(`[${chalk.magentaBright('email-pipeline')}] ${message}`);
-    previousSpinner = true;
-}
-
-const error = (message) => {
-    if (!spinner) return console.error(message);
-    let type = 'error';
-    spinner.fail(`[${chalk.magentaBright('email-pipeline')}] ${colors[type](type.toUpperCase())}: ${message}`);
-    previousSpinner = true;
-}
-
 const processLog = {
-    start,
-    complete,
-    error,
-    update
+    start: (message) => {
+        if (previousSpinner && !debug) {
+            process.stdout.moveCursor(0, -1);
+            process.stdout.clearLine();
+        }
+
+        const text = `[${chalk.magentaBright('email-pipeline')}] ${message}`;
+
+
+        spinner = ora({
+            text: text,
+            spinner: 'dots'
+        }).start();
+
+        previousSpinner = true;
+    },
+    update: (message) => {
+        if (!spinner) return console.log(message);
+        spinner.text = `[${chalk.magentaBright('email-pipeline')}] ${message}`;
+        previousSpinner = true;
+    },
+    complete: (message) => {
+        if (!spinner) return console.log(message);
+        spinner.succeed(`[${chalk.magentaBright('email-pipeline')}] ${message}`);
+        previousSpinner = true;
+    },
+    error: (message) => {
+        if (!spinner) return console.error(message);
+        let msgType = colors['error'];
+        spinner.fail(`[${chalk.magentaBright('email-pipeline')}] ${msgType.color(msgType.message)}: ${message}`);
+        previousSpinner = true;
+    }
 }
 
 export { log, processLog };

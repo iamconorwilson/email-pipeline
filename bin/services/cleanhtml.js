@@ -20,6 +20,7 @@ class CleanHtml {
         this.combOpts = deepMerge(defaultOpts, context.cleanHtml?.customOpts);
         this.init = this.init.bind(this);
         this.render = this.render.bind(this);
+        this.env = context.env || 'prod';
     }
 
     init() {
@@ -40,13 +41,15 @@ class CleanHtml {
                 //remove <tbody> tags
                 fileString = await fileString.replace(/<\/?tbody>/g, '');
         
-                // Apply comb
-                let combResult = comb(fileString, this.combOpts);
+                if (this.env !== 'dev') {
+                    // Apply comb
+                    let combResult = comb(fileString, this.combOpts);
 
-                let combString = combResult.result;
-
+                    fileString = combResult.result;
+                }
+                
                 // Then apply prettify
-                let formattedString = await prettier.format(combString, { parser: 'html', printWidth: 900, htmlWhitespaceSensitivity: 'css', singleQuote: true });
+                let formattedString = await prettier.format(fileString, { parser: 'html', printWidth: 900, htmlWhitespaceSensitivity: 'css', singleQuote: true });
         
                 await writeFile(this.buildDir, fileName, formattedString);
             }

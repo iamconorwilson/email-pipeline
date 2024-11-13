@@ -24,9 +24,9 @@ const run = async () => {
 
 
     try {
-        await removeFiles(options.dir.dest + '/**/*');
+        await removeFiles(options.dir.dest);
 
-        await state.sass.render();
+        await state.cssRenderer.render();
 
         await state.postcss.render();
 
@@ -49,12 +49,9 @@ const run = async () => {
         process.exit(1);
     }
 
-
-    
 }
 
 const debouncedRun = debounce(run, 500);
-
 watch.on('add', debouncedRun).on('change', debouncedRun)
 
 run();

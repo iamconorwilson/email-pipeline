@@ -1,7 +1,7 @@
 
 import fs from 'fs';
 
-import { log } from './logger.js';
+import { log, processLog } from './logger.js';
 
 
 const displayError = (name, error, filePath) => {
@@ -9,8 +9,10 @@ const displayError = (name, error, filePath) => {
     let c;
     let message;
 
+    let localPath = filePath.replace(process.cwd(), '');
+
     if (name !== 'sassRender' && name !== 'nunjucksRender'){
-        log(`Error rendering ${filePath} - ${error}`, 'error') 
+        log(`Error rendering ${localPath} - ${error}`, 'error') 
         return;
     } 
     
@@ -23,7 +25,7 @@ const displayError = (name, error, filePath) => {
     if (name === 'nunjucksRender') {
         let njkMsg = error.message;
         let lineMatch = njkMsg.match(/Line (\d+)/);
-        l = lineMatch[1];
+        l = lineMatch[1] - 2;
         let columnMatch = njkMsg.match(/Column (\d+)/);
         c = columnMatch[1];
         //get message from end of string and capitalize first letter
@@ -38,11 +40,11 @@ const displayError = (name, error, filePath) => {
 
     // 
 
-    log(`Error rendering ${filePath}`, 'error');
-    log(`Line: ${l}, Column: ${c} | ${errorLine}`, 'error');
-    log(message, 'error');
+    processLog.error(`Error rendering ${localPath}`, 'error');
+    console.error(`Line: ${l}, Column: ${c} | ${errorLine}`);
+    console.error(message);
 
-    
+    process.exit(1);
 }
 
 export { displayError };
