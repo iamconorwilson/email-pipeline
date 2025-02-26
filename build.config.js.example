@@ -27,6 +27,11 @@ const options = () => {
         partialsDir: null,
         helpersDir: null,
     },
+    liquid: {
+        customLayouts: null,
+        customFilters: [],
+        customTags: [],
+    },
     sass: {
         customOpt: null,
     },
