@@ -2,7 +2,6 @@
 
 import { log, processLog } from './functions/logger.js';
 import { init } from './functions/init.js';
-import { removeFiles } from './functions/removeFiles.js';
 import { setOpts } from './functions/setOpts.js';
 import { formatDate } from './functions/formatDate.js';
 import debounce from 'debounce';
@@ -24,20 +23,19 @@ const run = async () => {
 
 
     try {
-        await removeFiles(options.dir.dest);
 
         await state.cssRenderer.render();
 
         await state.postcss.render();
 
         await state.passthrough.render();
-        
+
         await state.htmlRenderer.render();
 
         await state.inlinecss.render();
 
         await state.cleanhtml.render();
-        
+
         reload.refresh('*');
 
         const endTime = new Date();

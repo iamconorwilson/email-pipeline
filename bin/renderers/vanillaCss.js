@@ -1,12 +1,12 @@
 
-import { promises as fs } from 'fs';
+import fs from 'fs';
 import { basename } from 'path';
 import { task } from '../functions/task.js';
 
 class vanillaCss {
     constructor(context) {
         //directories
-        this.buildDir = context.dir.dest  + '/css';
+        this.buildDir = context.dir.dest + '/css';
         this.sourceDir = context.dir.src;
 
         this.srcGlob = this.sourceDir + '/css/!(_*).css';
@@ -24,7 +24,9 @@ class vanillaCss {
         await task('CSS Passthrough', async (utils) => {
 
             //make dir if it doesn't exist
-            await fs.mkdir(this.buildDir);
+            if (!fs.existsSync(this.buildDir)) {
+                fs.mkdirSync(this.buildDir);
+            }
 
             let { getFiles, readFromFile, writeFile } = utils;
 

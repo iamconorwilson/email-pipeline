@@ -22,7 +22,7 @@ const init = async (options) => {
 
     //check if css directory exists, if not, create it
     if (!existsSync(join(options.dir.dest, 'css'))) {
-        mkdirSync(join(options.dir.dest, 'css')); 
+        mkdirSync(join(options.dir.dest, 'css'));
     }
 
     // set environment based on --env flag
@@ -30,31 +30,31 @@ const init = async (options) => {
     log(`Environment set to '${options.env}'`, 'info');
 
     // import all services
-    const services = readdirSync(join( __dirname, '../services'));
+    const services = readdirSync(join(__dirname, '../services'));
     for (const service of services) {
         await getService(service, options, 'services');
     }
 
     // import all renderers
-    const renderers = readdirSync(join( __dirname, '../renderers'));
+    const renderers = readdirSync(join(__dirname, '../renderers'));
     for (const renderer of renderers) {
         await getService(renderer, options, 'renderers');
     }
-    
+
 
     // set html renderer based on config, else use nunjucks as default
     if (options.htmlRenderer && state[options.htmlRenderer]) {
-        state.htmlRenderer = state[options.htmlRenderer]; 
+        state.htmlRenderer = state[options.htmlRenderer];
     } else {
-        log('No html renderer found, using nunjucks as default', 'warn');
-        state.htmlRenderer = state.nunjucks;
+        log('No HTML renderer selected', 'warn');
+        state.htmlRenderer = state.vanillaHtml;
     }
 
     // set css renderer based on config, else use vanillaCss as default
     if (options.cssRenderer && state[options.cssRenderer]) {
         state.cssRenderer = state[options.cssRenderer];
     } else {
-        log('No css renderer found, using vanillaCss as default', 'warn');
+        log('No CSS renderer selected', 'warn');
         state.cssRenderer = state.vanillaCss;
     }
 
