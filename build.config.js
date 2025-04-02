@@ -1,7 +1,7 @@
 const options = () => {
   return {
     dir: {
-      src: "./test/src/vanillahtml",
+      src: "./test/src/nunjucks",
       dest: "./test/dist",
     },
     passthrough: [
@@ -14,8 +14,8 @@ const options = () => {
       //   dest: './test/dist/images'
       // }
     ],
-    htmlRenderer: false,
-    cssRenderer: false,
+    htmlRenderer: 'nunjucks',
+    cssRenderer: 'sass',
     server: {
       qrCode: false,
       port: 3030,
