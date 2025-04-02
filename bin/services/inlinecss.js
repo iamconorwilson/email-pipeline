@@ -1,23 +1,22 @@
-import inlineCss from 'inline-css';
 import { basename, join } from 'path';
+import { pathToFileURL } from 'url';
 import { readFromFile } from '../functions/fileUtils.js';
 import { task } from '../functions/task.js';
 
+import { inline } from '@css-inline/css-inline';
+
 class CssInline {
     constructor(context, services) {
-        this.inlineCss = inlineCss;
+        this.inlineCss = inline;
         this.buildDir = context.dir.dest;
         this.sourceDir = context.dir.src;
 
         this.srcGlob = this.buildDir + '/*.html';
 
-        this.port = services.express.port ?? 3030;
-
         this.inlineOpts = {
-            url: `http://localhost:${this.port}`,
-            applyStyleTags: false,
-            removeStyleTags: false,
-            applyLinkTags: true,
+            inlineStyleTags: false,
+            keepStyleTags: true,
+            baseUrl: pathToFileURL(join(this.buildDir, 'css')).href,
         }
 
         this.init = this.init.bind(this);
@@ -55,7 +54,7 @@ class CssInline {
                 fileString = this.embedCSS(fileString);
 
                 //inline remaining link tags
-                await this.inlineCss(fileString, this.inlineOpts).then((html) => {fileString = html});
+                fileString = this.inlineCss(fileString, this.inlineOpts);
 
                 await writeFile(this.buildDir, fileName, fileString);
             };

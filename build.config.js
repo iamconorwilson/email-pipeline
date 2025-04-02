@@ -1,25 +1,25 @@
 const options = () => {
   return {
     dir: {
-        src: "./test/src/vanillaHtml",
-        dest: "./test/dist",
+      src: "./test/src/nunjucks",
+      dest: "./test/dist",
     },
     passthrough: [
-        // {
-        //     src: './test/src/sass/passthrough/*',
-        //     dest: './test/dist/css'
-        // },
-        // {
-        //   src: './test/src/assets/images-assets/*',
-        //   dest: './test/dist/images'
-        // }
+      // {
+      //     src: './test/src/sass/passthrough/*',
+      //     dest: './test/dist/css'
+      // },
+      // {
+      //   src: './test/src/assets/images-assets/*',
+      //   dest: './test/dist/images'
+      // }
     ],
-    htmlRenderer: 'vanillaHtml',
-    cssRenderer: 'vanillaCss',
+    htmlRenderer: 'nunjucks',
+    cssRenderer: 'sass',
     server: {
-        qrCode: false,
-        port: 3030,
-        openBrowser: false,
+      qrCode: false,
+      port: 3030,
+      openBrowser: false,
     }
   };
 };

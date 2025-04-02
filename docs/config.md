@@ -1,3 +1,5 @@
+# Configuration
+
 You can create an `build.config.js` file in order to set custom options for your project. Here is the most basic version of this file. Additional options can be added to further customise your project.
 
 ```js
@@ -106,13 +108,13 @@ const options = () => {
 
 ### HTML Renderer
 
-Set the HTML renderer to be used. Options are `nunjucks`, `handlebars` or `vanillaHtml`. Defaults to `nunjucks`.
+Set the HTML renderer to be used. Options are `nunjucks`, `handlebars`, `liquid` or `false` for no renderer. Defaults to `false`.
 
 |                 |                                         |
 | --------------- | --------------------------------------- |
 | _Object Key_    | `htmlRenderer`                          |
 | _Default Value_ | `nunjucks`                              |
-| _Valid Options_ | `nunjucks`, `handlebars`, `vanillaHtml` |
+| _Valid Options_ | `nunjucks`, `handlebars`, `liquid`, `false` |
 
 **Example**
 
@@ -125,20 +127,20 @@ const options = () => {
 ```
 ### CSS Renderer
 
-Set the CSS renderer to be used. Options are `sass` or `vanillaCss`. Defaults to `sass`.
+Set the CSS renderer to be used. Options are `sass` or `false` for no renderer. Defaults to `false`.
 
 |                 |                        |
 | --------------- | ---------------------- |
 | _Object Key_    | `cssRenderer`          |
 | _Default Value_ | `sass`                 |
-| _Valid Options_ | `sass` or `vanillaCss` |
+| _Valid Options_ | `sass` or `false` |
 
 **Example**
 
 ```js
 const options = () => {
   return {
-    htmlRenderer: "nunjucks",
+    cssRenderer: "sass",
   };
 };
 ```
@@ -192,7 +194,7 @@ const options = () => {
 };
 ```
 
-### Nunjucks - Custom Extensions (optional)
+#### Custom Extensions (optional)
 
 Array of custom extensions passed to the nunjucks render function. See [nunjucks custom tags](https://mozilla.github.io/nunjucks/api.html#custom-tags) documentation.
 
@@ -268,7 +270,7 @@ const options = () => {
 
 #### Custom Helpers (optional)
 
-Array of additional helper directories to be accessed by handlebars. Set in addition to the default `./src/herlpers` directory.
+Array of additional helper directories to be accessed by handlebars. Set in addition to the default `./src/helpers` directory.
 
 |                 |                            |
 | --------------- | -------------------------- |
@@ -285,6 +287,83 @@ const options = () => {
       customHelpers: ["./src/helpers/"],
     },
   };
+};
+```
+
+### Liquid Options - TODO
+
+#### Custom Layouts (optional)
+
+Array of additional layout directories to be accessed by liquid. Set in addition to the default `./src/layouts` directory.
+
+|                 |                           |
+| --------------- | ------------------------- |
+| _Object Key_    | `liquid.customLayouts`    |
+| _Default Value_ | `[]`                      |
+| _Valid Options_ | Array of valid directories |
+
+**Example**
+
+```js
+const options = () => {
+  return {
+    liquid: {
+      customLayouts: ["./src/layouts/"],
+    },
+  };
+};
+```
+
+#### Custom filters (optional)
+
+Array of additional custom liquid filters. Set in addition to the custom Braze filters. See [liquidjs custom filters](https://liquidjs.com/tutorials/register-filters-tags.html#Register-Filters) documentation.
+
+|                 |                            |
+| --------------- | -------------------------- |
+| _Object Key_    | `liquid.customFilters` |
+| _Default Value_ | `[]`                       |
+| _Valid Options_ | An array containing functions as per the liquidjs documentation. |
+
+**Example**
+
+```js
+const options = () => {
+  return {
+    liquid: {
+      customFilters: [{
+        name: "filter-name",
+        func: function()
+	  }]
+    }
+  }
+};
+```
+
+#### Custom tags (optional)
+
+Array of additional custom liquid tags. Set in addition to the custom Braze tags. See [liquidjs custom tags](https://liquidjs.com/tutorials/register-filters-tags.html#Register-Tags) documentation.
+
+|                 |                            |
+| --------------- | -------------------------- |
+| _Object Key_    | `liquid.customTags` |
+| _Default Value_ | `[]`                       |
+| _Valid Options_ | An array containing functions as per the liquidjs documentation. |
+
+**Example**
+
+```js
+const options = () => {
+  return {
+    liquid: {
+      customTags: [{
+        name: "tag-name",
+        obj: {
+          parse: function(tagToken, remainTokens),
+          render: function(liquidContext)
+        }
+	  }]
+    }
+  }
 };
 ```
 
